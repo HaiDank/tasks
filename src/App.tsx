@@ -1,17 +1,36 @@
+import './App.css';
+import { useEffect } from 'react';
+import Home from './pages/Homepage/Home';
+import { Routes, Route } from 'react-router-dom';
+import RequireAuth from './pages/RequireAuth';
+import Dashboard from './pages/Dashboard/Dashboard';
+import Workspace from './pages/Workspace';
+import { useAppDispatch } from './hooks/hooks';
+import { login } from './states/User/UserSlice';
 
-import './App.css'
-import Home from './pages/Homepage/Home'
-import { Routes, Route } from "react-router-dom"
+const App: React.FC = () => {
 
-function App() {
+	const dispatch = useAppDispatch();
 
-  return (
-    <>
-        <Routes>
-          <Route path='/' element={<Home/>}/>
-        </Routes>
-    </>
-  )
-}
+	useEffect(() => {
+		let user = sessionStorage.getItem('loginStatus');
+		if (user == 'true') {
+			dispatch(login())
+		}
+	}, []);
 
-export default App
+	return (
+		<>
+			<Routes>
+				<Route path='/login' element={<Home />} />
+				<Route element={<RequireAuth />}>
+					<Route path='/' element={<Workspace />}>
+						<Route path='/dashboard' element={<Dashboard />} />
+					</Route>
+				</Route>
+			</Routes>
+		</>
+	);
+};
+
+export default App;

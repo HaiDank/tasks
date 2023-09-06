@@ -1,6 +1,8 @@
 import { Form, Input, Checkbox, Button, Card, Typography } from 'antd';
 import React from 'react';
-import accountsList from '../../dummyAccounts';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch} from '../../hooks/hooks';
+import { login } from '../../states/User/UserSlice';
 
 type InputType = {
 	username?: string;
@@ -11,10 +13,13 @@ type InputType = {
 const { Meta } = Card;
 const { Title } = Typography;
 
-function Home() {
+const Home: React.FC = () => {
+	const navigate = useNavigate();
+	const dispatch = useAppDispatch();
 	function onFinish() {
-        const accounts = accountsList
-    }
+		dispatch(login());
+		navigate('/dashboard');
+	}
 
 	function onFinishFailed() {
 		console.log('onfinishfailed');
@@ -81,6 +86,6 @@ function Home() {
 			</div>
 		</>
 	);
-}
+};
 
 export default Home;
