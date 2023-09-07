@@ -1,3 +1,14 @@
+
+.element-shadow {
+	box-shadow: 4px 4px 5px -1px rgba(0, 0, 0, 0.1);
+	-webkit-box-shadow: 4px 4px 5px -1px rgba(0, 0, 0, 0.1);
+	-moz-box-shadow: 4px 4px 5px -1px rgba(0, 0, 0, 0.1);
+}
+
+.element-border{
+  border: 1px solid rgba(110, 110, 110, 0.11);
+}
+
 .gradient-bg-peachy {
   background: linear-gradient(to right, rgb(254, 202, 202), rgb(252, 165, 165), rgb(254, 240, 138))
 }

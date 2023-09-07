@@ -1,9 +1,13 @@
-import React from 'react'
+import React from 'react';
+import Header from '../../components/Header';
 
 const Dashboard: React.FC = () => {
-  return (
-    <div>Dashboard</div>
-  )
-}
+	return (
+		<main>
+			<Header title='Dashboard' />
+			<div>Dashboard</div>
+		</main>
+	);
+};
 
-export default Dashboard
+export default Dashboard;
