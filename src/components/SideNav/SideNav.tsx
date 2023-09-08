@@ -1,39 +1,43 @@
 import { Menu, MenuProps } from 'antd';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { menuItems } from './SideNavItem';
-import { useAppDispatch } from '../../hooks/hooks';
-import { logout } from '../../states/User/UserSlice';
 import { MenuInfo } from 'rc-menu/lib/interface';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { saveMenu, savePage } from '../../states/SidenavSlice';
 
 const SideNav: React.FC = () => {
+	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
-	const navigate = useNavigate()
+	const sidenavData = useAppSelector((state) => state.sidenav);
+
+	useEffect(() => {
+		let currentPage = sidenavData.currentPage.toString();
+		navigate(currentPage);
+	}, []);
 
 	function onClick(item: MenuInfo) {
-		if (item.key === 'signout') {
-			dispatch(logout());
-			sessionStorage.removeItem('user');
-			navigate('/login', {replace: true})
-		} else {
-			navigate(item.key)
-		}
+		dispatch(savePage(item.key));
+		navigate(item.key);
 	}
+
+	const onOpenChange: MenuProps['onOpenChange'] = (keys) => {
+		dispatch(saveMenu(keys));
+	};
 
 	const items: MenuProps['items'] = menuItems;
 
 	return (
-
-			<Menu
-				className='w-full h-full'
-				onClick={(item) => onClick(item)}
-				defaultSelectedKeys={['/phong-ban']}
-				defaultOpenKeys={['g1']}
-				expandIcon={null}
-				mode='inline'
-				items={items}
-			/>
-		
+		<Menu
+			className='w-full h-full z-40'
+			onClick={(item) => onClick(item)}
+			defaultSelectedKeys={sidenavData.currentPage}
+			defaultOpenKeys={sidenavData.openedSubMenus}
+			onOpenChange={onOpenChange}
+			expandIcon={null}
+			mode='inline'
+			items={items}
+		/>
 	);
 };
 

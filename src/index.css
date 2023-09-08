@@ -6,23 +6,37 @@ html,
 body {
 	height: 100%;
 	margin: 0;
-  @apply font-sans
+	
+	@apply font-sans;
 }
 
 div#root {
 	height: 100%;
 }
 
+.content-wrapper {
+	@apply pl-8 pr-4 py-4 flex flex-col gap-4;
+}
+
+.simple-search-box{
+	@apply p-3 pl-1 pb-1 m-2 border-slate-300 border-0 border-b-2
+}
+
+.simple-search-box:focus{
+	@apply outline-none
+}
 
 
 /* width */
 ::-webkit-scrollbar {
+	height: 7px; 
 	width: 7px;
 }
 
 /* Track */
-::-webkit-scrollbar-track {
-	background: #f1f1f1;
+::-webkit-scrollbar-track-piece {
+	background: #f5f5f5;
+	border-radius: 10px;
 }
 
 /* Handle */
@@ -35,4 +49,3 @@ div#root {
 ::-webkit-scrollbar-thumb:hover {
 	background: #555;
 }
-

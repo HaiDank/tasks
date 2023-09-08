@@ -16,8 +16,12 @@ const { Title } = Typography;
 const Home: React.FC = () => {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
-	function onFinish() {
+	function onFinish(values: any) {
 		dispatch(login());
+		
+		if (typeof window !== 'undefined' && window.sessionStorage && values.remember) {
+			sessionStorage.setItem('loginStatus', JSON.stringify(values.remember));
+		}
 		navigate('/dashboard');
 	}
 

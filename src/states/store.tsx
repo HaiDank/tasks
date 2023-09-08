@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './User/UserSlice';
+import sidenavReducer from './SidenavSlice'
 
 const store = configureStore({
 	reducer: {
 		user: userReducer,
+		sidenav: sidenavReducer,
 	},
 });
 

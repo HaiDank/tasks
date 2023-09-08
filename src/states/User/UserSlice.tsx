@@ -30,6 +30,7 @@ export const userSlice = createSlice({
 		},
 		logout: (state) => {
 			state.logged = false;
+			sessionStorage.removeItem('user')
 		}
 	},
 });

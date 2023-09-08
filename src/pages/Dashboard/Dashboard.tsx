@@ -1,11 +1,11 @@
 import React from 'react';
-import Header from '../../components/Header';
+import ContentHeader from '../../components/Header';
 
 const Dashboard: React.FC = () => {
 	return (
 		<main>
-			<Header title='Dashboard' />
-			<div>Dashboard</div>
+			<ContentHeader title='Dashboard' />
+			<div className='content-wrapper'>Dashboard</div>
 		</main>
 	);
 };
