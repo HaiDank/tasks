@@ -1,4 +1,4 @@
-import { Avatar, Badge, Table } from 'antd';
+import { Avatar, Table } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import React from 'react';
 import { employeeDataList } from '../../dummyData';
@@ -20,6 +20,7 @@ import TableTitle from '../../components/Table/TableTitle';
 import GenericTableContent, {
 	GenderTableContent,
 } from '../../components/Table/TableContent';
+import DepartmentBadge from '../../components/DepartmentBadge';
 
 interface EmployeeDataType {
 	id: number;
@@ -45,11 +46,12 @@ const columns: ColumnsType<EmployeeDataType> = [
 		width: 50,
 	},
 	{
-		key: 'ava',
-		render: (value, record, index) => {
+		dataIndex: 'online',
+		key: 'online',
+		render: (value) => {
 			return (
 				<>
-					{index % 2 == 0 ? (
+					{!value ? (
 						<Avatar size='small' icon={<UserOutlined />} />
 					) : (
 						<Avatar
@@ -102,11 +104,7 @@ const columns: ColumnsType<EmployeeDataType> = [
 				<GenericTableContent
 					underline={true}
 					content={value}
-					icon={
-						<Badge
-							color={`${value === 'Sales' ? 'gold' : 'purple'}`}
-						/>
-					}
+					icon={<DepartmentBadge department={value} />}
 				/>
 			);
 		},
@@ -187,15 +185,22 @@ const columns: ColumnsType<EmployeeDataType> = [
 	},
 ];
 
-const EmployeeListTable: React.FC = () => {
+const dataSize = employeeDataList.length;
+
+const EmployeeListTable: React.FC<{ data: EmployeeDataType[] }> = ({
+	data,
+}) => {
 	return (
-		<Content className='w-full pb-6 rounded-lg shadow-md'>
+		<Content className='w-full pb-4 rounded-lg shadow-md mt-4 '>
 			<Table
 				columns={columns}
-				dataSource={employeeDataList}
-				scroll={{ x: '100vw', y: 350 }}
-				className=''
+				dataSource={data}
+				scroll={{ x: '100vw', y: 400 }}
+				pagination={false}
 			/>
+			<span className='font-semibold m-4 mr-16 float-right'>
+				1 - {dataSize} of {dataSize}
+			</span>
 		</Content>
 	);
 };

@@ -1,10 +1,50 @@
-import React from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import ContentHeader from '../../components/Header';
 import { Button, Card, ConfigProvider, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import EmployeeListTable from './EmployeeListTable';
+import { employeeDataList } from '../../dummyData';
 
 const EmployeeList: React.FC = () => {
+	const [employeeList, setEmployeeList] = useState(employeeDataList);
+	const [filteredEmployeeList, setFilteredEmployeeList] = useState(employeeDataList);
+	const [filter, setFilter] = useState('all');
+	const [searchInput, setSearchInput] = useState('');
+
+	useEffect(() => {
+		if (filter == 'all') {
+			setEmployeeList(employeeDataList)
+		} else {
+			let data = employeeDataList.filter(
+				(employee) => employee.department === filter
+			);
+			setEmployeeList(data);
+			setFilteredEmployeeList(data);
+		}
+	}, [filter]);
+
+	useEffect(() => {
+		if (searchInput === ''){
+			setEmployeeList(filteredEmployeeList)
+		} else {
+			let data = filteredEmployeeList.filter(
+				(employee) => employee.name.toLowerCase().includes(searchInput)
+				
+			);
+			setEmployeeList(data);	
+		}
+		
+	}, [searchInput]);
+
+	const onDepartmentSelect = (value: string) => {
+		setFilter(value);
+	};
+
+	const onSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
+		setSearchInput(event.target.value)
+		
+	}
+
 	return (
 		<>
 			<ContentHeader title='Danh sách nhân viên' />
@@ -19,9 +59,22 @@ const EmployeeList: React.FC = () => {
 								type='text'
 								placeholder='Tìm kiếm'
 								className='simple-search-box '
+								onChange={(e) => onSearchChange(e)}
 							/>
 							<Select
 								defaultValue='Toàn bộ phòng ban'
+								options={[
+									{
+										value: 'all',
+										label: 'Toàn bộ phòng ban',
+									},
+									{ value: 'Sales', label: 'Sales' },
+									{
+										value: 'Chăm sóc khách hàng',
+										label: 'Chăm sóc khách hàng',
+									},
+								]}
+								onChange={(value) => onDepartmentSelect(value)}
 								size='large'
 								bordered={false}
 							/>
@@ -38,6 +91,7 @@ const EmployeeList: React.FC = () => {
 									type='default'
 									size='large'
 									className='border-[#00b96b] text-[#00b96b] hover:shadow-md'
+									onClick={() => window.location.reload()}
 								>
 									Làm mới
 								</Button>
@@ -53,7 +107,7 @@ const EmployeeList: React.FC = () => {
 						</div>
 					</div>
 				</Card>
-				<EmployeeListTable />
+				<EmployeeListTable data={employeeList} />
 			</div>
 		</>
 	);

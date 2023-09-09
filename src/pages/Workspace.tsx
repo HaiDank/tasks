@@ -11,7 +11,7 @@ const Workspace: React.FC = () => {
 
 	return (
 		<>
-			<div className='h-full w-full relative	'>
+			<div className='h-full w-full relative'>
 				<div className='md:w-[300px] flex flex-col h-full fixed z-40 overflow-hidden element-border bg-white'>
 					<div className='px-6 pt-1 pb-3 flex justify-start items-center'>
 						<Avatar
@@ -26,7 +26,7 @@ const Workspace: React.FC = () => {
 						<SideNav />
 					</div>
 				</div>
-				<div className='flex-1 md:ml-[300px]'>
+				<div className='flex flex-col h-full md:ml-[300px]'>
 					<Outlet />
 				</div>
 			</div>
